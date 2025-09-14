@@ -8,15 +8,24 @@ use App\Http\Requests\UpdateGameRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\GameResource;
 use App\Http\Resources\V1\GameCollection;
+use App\Services\V1\GameQuery;
+use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new GameCollection(Game::paginate());
+        $filter = new GameQuery();
+        $queryItems = $filter->transform($request); //column operator value
+
+        if(count($queryItems) == 0){
+            return new GameCollection(Game::paginate());
+        } else{
+            return new GameCollection(Game::where($queryItems)->paginate());
+        }
     }
 
     /**

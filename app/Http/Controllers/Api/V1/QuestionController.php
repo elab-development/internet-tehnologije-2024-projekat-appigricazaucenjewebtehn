@@ -8,15 +8,24 @@ use App\Http\Requests\UpdateQuestionRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\QuestionResource;
 use App\Http\Resources\V1\QuestionCollection;
+use App\Services\V1\QuestionQuery;
+use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new QuestionCollection(Question::paginate());
+        $filter = new QuestionQuery();
+        $queryItems = $filter->transform($request); //column operator value
+
+        if(count($queryItems) == 0){
+            return new QuestionCollection(Question::paginate());
+        } else{
+            return new QuestionCollection(Question::where($queryItems)->paginate());
+        }
     }
 
     /**
