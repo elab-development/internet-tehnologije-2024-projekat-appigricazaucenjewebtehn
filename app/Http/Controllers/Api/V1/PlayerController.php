@@ -6,6 +6,8 @@ use App\Models\Player;
 use App\Http\Requests\StorePlayerRequest;
 use App\Http\Requests\UpdatePlayerRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\PlayerResource;
+use App\Http\Resources\V1\PlayerCollection;
 
 class PlayerController extends Controller
 {
@@ -14,7 +16,8 @@ class PlayerController extends Controller
      */
     public function index()
     {
-        return Player::all();
+        //paginacija ali kroz resurse
+        return new PlayerCollection(Player::paginate());
     }
 
     /**
@@ -38,7 +41,7 @@ class PlayerController extends Controller
      */
     public function show(Player $player)
     {
-        //
+        return new PlayerResource($player);
     }
 
     /**

@@ -6,6 +6,8 @@ use App\Models\Question;
 use App\Http\Requests\StoreQuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\QuestionResource;
+use App\Http\Resources\V1\QuestionCollection;
 
 class QuestionController extends Controller
 {
@@ -14,7 +16,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        return new QuestionCollection(Question::paginate());
     }
 
     /**
@@ -38,7 +40,7 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        return new QuestionResource($question);
     }
 
     /**

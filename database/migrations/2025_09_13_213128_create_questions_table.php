@@ -16,6 +16,10 @@ return new class extends Migration
             $table->integer('game_id');
             $table->string('question_text');
             $table->string('options');
+            $table->string('option_a');
+            $table->string('option_b');
+            $table->string('option_c');
+            $table->string('option_d');
             $table->string('correct_answer');
             $table->integer('points');
             $table->timestamps();
