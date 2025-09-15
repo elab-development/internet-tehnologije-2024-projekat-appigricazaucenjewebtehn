@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateQuestionRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\QuestionResource;
 use App\Http\Resources\V1\QuestionCollection;
-use App\Services\V1\QuestionQuery;
+use App\Filters\V1\QuestionsFilter;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -18,14 +18,33 @@ class QuestionController extends Controller
      */
     public function index(Request $request)
     {
-        $filter = new QuestionQuery();
-        $queryItems = $filter->transform($request); //column operator value
+        try{
+            $filter = new QuestionsFilter();
+            $filterItems = $filter->transform($request); //column operator value
 
-        if(count($queryItems) == 0){
-            return new QuestionCollection(Question::paginate());
-        } else{
-            return new QuestionCollection(Question::where($queryItems)->paginate());
+            if(count($filterItems) == 0){
+             return new QuestionCollection(Question::paginate());
+            } else{
+                $questions = Question::where($filterItems)->paginate();
+                return new QuestionCollection($questions->appends($request->query()));
+            }
         }
+        catch(\Illuminate\Database\QueryException $e){
+            //greska u upitu
+            return response()->json([
+            'success' => false,
+            'message' => 'Database query error',
+            'error' => 'Invalid filter parameters or database error'
+        ], 400);
+        }
+        catch (\Exception $e) {
+            // neka druga greska
+            return response()->json([
+                'success' => false,
+                'message' => 'Server error',
+                'error' => $e->getMessage()
+        ], 500);
+    }
     }
 
     /**

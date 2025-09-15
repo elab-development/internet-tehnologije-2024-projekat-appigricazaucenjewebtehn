@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateGameRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\GameResource;
 use App\Http\Resources\V1\GameCollection;
-use App\Services\V1\GameQuery;
+use App\Filters\V1\GamesFilter;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
@@ -18,13 +18,33 @@ class GameController extends Controller
      */
     public function index(Request $request)
     {
-        $filter = new GameQuery();
-        $queryItems = $filter->transform($request); //column operator value
+        try{
+            $filter = new GamesFilter();
+            $filterItems = $filter->transform($request); //column operator value
 
-        if(count($queryItems) == 0){
-            return new GameCollection(Game::paginate());
-        } else{
-            return new GameCollection(Game::where($queryItems)->paginate());
+            $includeQuestions = request()->query('includeQuestions');
+
+            $games = Game::where($filterItems);
+            
+            if($includeQuestions){
+                $games = $games->with('questions');
+            }
+            return new GameCollection($games->paginate()->appends($request->query()));
+
+        } catch (\Illuminate\Database\QueryException $e) {
+        // los operator kolona itd
+        return response()->json([
+            'success' => false,
+            'message' => 'Database query error',
+            'error' => 'Invalid filter parameters or database error'
+        ], 400);
+        } catch (\Exception $e) {
+        // generalna greska
+        return response()->json([
+            'success' => false,
+            'message' => 'Server error',
+            'error' => $e->getMessage()
+        ], 500);
         }
     }
 
@@ -49,6 +69,10 @@ class GameController extends Controller
      */
     public function show(Game $game)
     {
+        $includeQuestions = request()->query('includeQuestions');
+        if($includeQuestions){
+            return new GameResource($game->loadMissing('questions'));
+        }
         return new GameResource($game);
     }
 
