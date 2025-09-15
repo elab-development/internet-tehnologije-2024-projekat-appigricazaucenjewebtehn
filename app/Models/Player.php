@@ -10,7 +10,13 @@ class Player extends Model
     /** @use HasFactory<\Database\Factories\PlayerFactory> */
     use HasFactory;
 
-        public function games(){
+    protected $fillable = [
+        'name',
+        'password',
+        'email'
+    ];
+
+    public function games(){
         return $this->hasMany(Game::class);
     }
 }

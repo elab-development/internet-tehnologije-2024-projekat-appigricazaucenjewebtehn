@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Question;
-use App\Http\Requests\StoreQuestionRequest;
+use App\Http\Requests\V1\StoreQuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\QuestionResource;
@@ -50,17 +50,15 @@ class QuestionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+
+   
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreQuestionRequest $request)
     {
-        //
+        return new QuestionResource(Question::create($request->all()));
     }
 
     /**
@@ -74,10 +72,7 @@ class QuestionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Question $question)
-    {
-        //
-    }
+    
 
     /**
      * Update the specified resource in storage.

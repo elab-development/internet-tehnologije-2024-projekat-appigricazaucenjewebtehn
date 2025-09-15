@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Player;
-use App\Http\Requests\StorePlayerRequest;
+use App\Http\Requests\V1\StorePlayerRequest;
 use App\Http\Requests\UpdatePlayerRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\PlayerResource;
@@ -51,21 +51,12 @@ class PlayerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    //INSERT PLAYER
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     //POST PLAYERS
     public function store(StorePlayerRequest $request)
     {
-        //
+        return new PlayerResource(Player::create($request->all()));
     }
 
     /**
@@ -74,21 +65,13 @@ class PlayerController extends Controller
     //GET PLAYERS
     public function show(Player $player)
     {
-        $includeGames = $request->query('includeGames');
+        $includeGames = request()->query('includeGames');
 
         if($includeGames){
             return new PlayerResource($player->loadMissing('games'));
         }
 
         return new PlayerResource($player);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Player $player)
-    {
-        //
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Game;
-use App\Http\Requests\StoreGameRequest;
+use App\Http\Requests\V1\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\GameResource;
@@ -51,17 +51,14 @@ class GameController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+    
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreGameRequest $request)
     {
-        //
+        return new GameResource(Game::create($request->all()));
     }
 
     /**
@@ -79,10 +76,7 @@ class GameController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Game $game)
-    {
-        //
-    }
+   
 
     /**
      * Update the specified resource in storage.
