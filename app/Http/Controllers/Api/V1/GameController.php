@@ -93,4 +93,12 @@ class GameController extends Controller
     {
         //
     }
+
+    public function topScores(){
+        $topPlayers = Game::orderBy('score', 'DESC')
+        ->take(10)
+        ->get();
+
+        return GameResource::collection($topPlayers);
+    }
 }
