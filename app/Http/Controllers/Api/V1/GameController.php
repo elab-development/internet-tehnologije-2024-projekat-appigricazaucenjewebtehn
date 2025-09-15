@@ -101,4 +101,14 @@ class GameController extends Controller
 
         return GameResource::collection($topPlayers);
     }
+
+    public function markAsComplete($id){
+        $game = Game::findOrFail($id);
+        $game->update([
+            'completed' => true
+        ]);
+    }
+
 }
+
+

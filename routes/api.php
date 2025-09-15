@@ -15,6 +15,8 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], f
 
     Route::get('/games/top-scores', [GameController::class, 'topScores']);
 
+    Route::post('/games/{id}/complete', [GameController::class, 'markAsComplete']);
+
     Route::apiResource('players', PlayerController::class);
     Route::apiResource('games', GameController::class);
     Route::apiResource('questions', QuestionController::class);
