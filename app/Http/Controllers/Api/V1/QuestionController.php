@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Question;
 use App\Http\Requests\V1\StoreQuestionRequest;
-use App\Http\Requests\UpdateQuestionRequest;
+use App\Http\Requests\V1\UpdateQuestionRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\QuestionResource;
 use App\Http\Resources\V1\QuestionCollection;
@@ -79,7 +79,7 @@ class QuestionController extends Controller
      */
     public function update(UpdateQuestionRequest $request, Question $question)
     {
-        //
+        $question->update($request->all());
     }
 
     /**
