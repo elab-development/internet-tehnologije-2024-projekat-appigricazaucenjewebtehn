@@ -107,6 +107,7 @@ class GameController extends Controller
         $game->update([
             'completed' => true
         ]);
+        return GameResource::
     }
 
 }
