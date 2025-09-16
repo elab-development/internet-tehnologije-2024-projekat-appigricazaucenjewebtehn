@@ -11,6 +11,9 @@ use App\Http\Resources\V1\QuestionCollection;
 use App\Filters\V1\QuestionsFilter;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+
 class QuestionController extends Controller
 {
     /**
@@ -46,13 +49,6 @@ class QuestionController extends Controller
         ], 500);
     }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-
-   
-
     /**
      * Store a newly created resource in storage.
      */
@@ -82,11 +78,65 @@ class QuestionController extends Controller
         $question->update($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Question $question)
+    public function downloadCSV(): StreamedResponse
     {
-        //
+        $fileName = 'questions-' . date('Y-m-d') . '.csv';
+        $questions = Question::select([
+            'id',
+            'game_id', 
+            'question_text',
+            'option_a',
+            'option_b',
+            'option_c',
+            'option_d',
+            'correct_answer',
+            'points'
+        ])->get();
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"$fileName\"",
+        ];
+
+        $callback = function() use ($questions) {
+            $file = fopen('php://output', 'w');
+            
+            fputcsv($file, [
+                'ID',
+                'Game ID', 
+                'Question Text',
+                'Option A',
+                'Option B',
+                'Option C',
+                'Option D',
+                'Correct Answer',
+                'Points'
+            ]);
+
+            foreach ($questions as $question) {
+                fputcsv($file, [
+                    $question->id,
+                    $question->game_id,
+                    $question->question_text,
+                    $question->option_a,
+                    $question->option_b,
+                    $question->option_c,
+                    $question->option_d,
+                    $question->correct_answer,
+                    $question->points
+                ]);
+            }          
+            fclose($file);
+        };
+
+        return Response::stream($callback, 200, $headers);
     }
+
+    public function forceDelete($id){
+        $question = Question::findOrFail($id);
+        $question->delete();
+    }
+
+
+
 }
