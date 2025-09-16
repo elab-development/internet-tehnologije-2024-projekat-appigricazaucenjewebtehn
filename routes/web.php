@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Http\Requests;
+use App\Http\Controllers\Api\V1\PlayerAuthController;
+use App\Http\Middleware\AuthCheck;
+use App\Http\Middleware\AlreadyLoggedIn;
 
 Route::get('/', function () {
     //return view('welcome');
@@ -23,22 +26,27 @@ Route::get('/setup', function(){
         $user->password=Hash::make($credentials['password']);
 
         $user->save();
-
-        
     }
     if(Auth::attempt($credentials)){
-            $user = Auth::user();
+        $user = Auth::user();
 
-            $adminToken = $user->createToken('admin-token', ['create', 'update', 'delete']);
-            $updateToken = $user->createToken('update-token', ['create', 'update']);
-            $basicToken = $user->createToken('basic-token');
+        $adminToken = $user->createToken('admin-token', ['create', 'update', 'delete']);
+        $updateToken = $user->createToken('update-token', ['create', 'update']);
+        $basicToken = $user->createToken('basic-token');
 
-            return [
-                'admin'=> $adminToken->plainTextToken,
-                'update'=> $updateToken->plainTextToken,
-                'basic'=> $basicToken->plainTextToken,
-            ];
-        }
+        return [
+            'admin'=> $adminToken->plainTextToken,
+            'update'=> $updateToken->plainTextToken,
+            'basic'=> $basicToken->plainTextToken,
+        ];
+    }
 
 });
+
+Route::get('/login', [PlayerAuthController::class, 'login'])->middleware('already.check');
+Route::get('/registration', [PlayerAuthController::class, 'registration'])->middleware('already.check');
+Route::post('/register-player', [PlayerAuthController::class, 'registerPlayer'])->name('register-player');
+Route::post('/login-player', [PlayerAuthController::class, 'loginPlayer'])->name('login-player');
+Route::get('/dashboard', [PlayerAuthController::class, 'dashboard'])->middleware('auth.check');
+Route::get('/logout', [PlayerAuthController::class, 'logout']);
 

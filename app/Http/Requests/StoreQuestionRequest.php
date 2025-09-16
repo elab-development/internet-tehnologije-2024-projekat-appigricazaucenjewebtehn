@@ -11,8 +11,7 @@ class StoreQuestionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $user = $this->user();
-        return $user != null && $user->tokenCan('create');
+        return false;;
     }
 
     /**
