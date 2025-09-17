@@ -16,9 +16,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class QuestionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         try{
@@ -57,22 +54,11 @@ class QuestionController extends Controller
         return new QuestionResource(Question::create($request->all()));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Question $question)
     {
         return new QuestionResource($question);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateQuestionRequest $request, Question $question)
     {
         $question->update($request->all());

@@ -13,9 +13,6 @@ use Illuminate\Http\Request;
 
 class PlayerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     //GET PLAYERS
     public function index(Request $request)
     {
@@ -33,21 +30,20 @@ class PlayerController extends Controller
             return new PlayerCollection($players->paginate()->appends($request->query()));
             
         } catch (\Illuminate\Database\QueryException $e) {
-        // los operator kolona itd
-        return response()->json([
-            'success' => false,
-            'message' => 'Database query error',
-            'error' => 'Invalid filter parameters or database error'
-        ], 400);
+            // los operator kolona itd
+            return response()->json([
+                'success' => false,
+                'message' => 'Database query error',
+                'error' => 'Invalid filter parameters or database error'
+            ], 400);
         } catch (\Exception $e) {
-        // generalna greska
-        return response()->json([
+            // generalna greska
+            return response()->json([
             'success' => false,
             'message' => 'Server error',
             'error' => $e->getMessage()
-        ], 500);
+            ], 500);
         }
-        //return new PlayerCollection(Player::paginate());
     }
 
     /**

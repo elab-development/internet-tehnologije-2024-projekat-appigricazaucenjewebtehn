@@ -43,10 +43,10 @@ Route::get('/setup', function(){
 
 });
 
-Route::get('/login', [PlayerAuthController::class, 'login'])->middleware('already.check');
-Route::get('/registration', [PlayerAuthController::class, 'registration'])->middleware('already.check');
-Route::post('/register-player', [PlayerAuthController::class, 'registerPlayer'])->name('register-player');
-Route::post('/login-player', [PlayerAuthController::class, 'loginPlayer'])->name('login-player');
-Route::get('/dashboard', [PlayerAuthController::class, 'dashboard'])->middleware('auth.check');
-Route::get('/logout', [PlayerAuthController::class, 'logout']);
+// Route::get('/login', [PlayerAuthController::class, 'login'])->middleware('already.check');
+// Route::get('/registration', [PlayerAuthController::class, 'registration'])->middleware('already.check');
+// Route::post('/register-player', [PlayerAuthController::class, 'registerPlayer'])->name('register-player');
+// Route::post('/login-player', [PlayerAuthController::class, 'loginPlayer'])->name('login-player');
+// Route::get('/dashboard', [PlayerAuthController::class, 'dashboard'])->middleware('auth.check');
+// Route::get('/logout', [PlayerAuthController::class, 'logout']);
 

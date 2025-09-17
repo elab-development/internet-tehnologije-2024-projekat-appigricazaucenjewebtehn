@@ -5,6 +5,14 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\V1\GameController;
 use App\Http\Controllers\Api\V1\QuestionController;
+use App\Http\Controllers\Api\V1\AuthController;
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::middleware(['auth:sanctum'])->group(function(){
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/profile', [AuthController::class, 'profile']);
+});
 
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function(){
     Route::get('/questions/download-csv', [QuestionController::class, 'downloadCSV']);
