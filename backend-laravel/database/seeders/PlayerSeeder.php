@@ -12,23 +12,23 @@ class PlayerSeeder extends Seeder
      */
     public function run(): void
     {
-        Player::factory()
-        ->count(25)
-        ->hasGames(10)
-        ->create();
+        // Player::factory()
+        // ->count(25)
+        // ->hasGames(10)
+        // ->create();
 
-        Player::factory()
-        ->count(100)
-        ->hasGames(5)
-        ->create();
+        // Player::factory()
+        // ->count(100)
+        // ->hasGames(5)
+        // ->create();
 
-        Player::factory()
-        ->count(100)
-        ->hasGames(3)
-        ->create();
+        // Player::factory()
+        // ->count(100)
+        // ->hasGames(3)
+        // ->create();
 
-        Player::factory()
-        ->count(5)
-        ->create();
+        // Player::factory()
+        // ->count(5)
+        // ->create();
     }
 }
