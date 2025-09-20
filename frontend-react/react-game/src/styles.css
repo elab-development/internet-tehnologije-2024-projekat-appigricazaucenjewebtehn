@@ -1,15 +1,19 @@
 *{
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body{
     margin: 0;
+    background-color: rgb(255, 216, 223);
 }
 
 .container{
-    margin: 2rem;
+    margin: 3rem;
+    margin-left: 43rem;
+    margin-right: 43rem;
     text-align: center;
-    
 }
 
 .site-title{
@@ -22,6 +26,7 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: stretch;
+    position: sticky;
     gap: 2rem;
     padding: 0 2rem;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
