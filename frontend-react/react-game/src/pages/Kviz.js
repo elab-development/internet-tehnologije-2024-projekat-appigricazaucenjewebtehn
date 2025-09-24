@@ -18,33 +18,8 @@ export default function Kviz(){
                 <h1>Kviz Master</h1>
                 <p>Testiraj svoje znanje...</p>
             </div>
-
             <div className="game-section">
-        
-                <div className="unity-container">
-                    {!isLoaded && (
-                        <div className="loading-overlay">
-                            <div className="loading-text">
-                                Ucitavanje: {Math.round(loadingProgression * 100)}%
-                            </div>
-                            <div className="loading-bar">
-                            <div 
-                                className="loading-progress"
-                                style={{ width: `${loadingProgression * 100}%` }}
-                            ></div>
-                        </div>
-                    </div>
-                    )}
-          
-                    <Unity 
-                        unityProvider={unityProvider}
-                        style={{
-                            width: "100%",
-                            borderRadius: "0.5rem",
-                            display: isLoaded ? "block" : "none"
-                        }}
-                    />
-                </div>
+                <UnityGame />
             </div>
 
         <div className="download-section">

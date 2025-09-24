@@ -37,15 +37,35 @@
     flex-direction: column;
     gap: 2rem;
 }
-
-.input{
+.inputs > div {
     display: flex;
     align-items: center;
     margin: auto;
-    width: 10rem;
-    height: 3rem;
-    background: rgb(255, 245, 248);
+    width: 100%;
+    max-width: 30rem;
+    height: 3.5rem;
+    background: rgb(243, 240, 240);
     border-radius: 0.5rem;
+    padding: 0 1rem;
+}
+
+.logged-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.logged-header h1{
+    color: rgb(206, 81, 108);
+    font-weight: 500;
+}
+
+.logged-header p{
+    color: rgb(116, 109, 109);
+    font-weight: 500;
+    font-size: 1.1rem;
 }
 
 .inputs img{
@@ -54,48 +74,40 @@
 
 .inputs input{
     height: 2rem;
-    width: 15rem;
-    background: rgb(255, 255, 255);
+    width: 14rem;
+    background: rgb(243, 240, 240);
     border: none;
     outline: none;
     color: rgb(116, 109, 109);
     font-size: 1.3rem;
 }
 
-.forgot-password{
-    padding-left: 1rem;
-    margin-top: 1.5rem;
-    color: rgb(116, 109, 109);
-    font-size: 1.2rem;
-}
-
-.forgot-password span{
-    color: rgb(206, 81, 108);
-    cursor: pointer;
-}
-
-.submit-container{
-    display: flex;
-    gap: 2rem;
-    margin: 2rem auto;
-}
-
-.submit{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 10rem;
-    height: 3rem;
+.inputs button{
+    align-self: center;
     color: white;
-    background-color: rgb(206, 81, 108);
-    border-radius: 3rem;
-    font-size: 1.2rem;
+    background: rgb(206, 81, 108);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.5rem;
     font-weight: 400;
-    cursor: pointer;
+    height: 3rem;
+    width: 10rem;
+    border: 0rem;
 }
 
-.gray{
-    background: rgb(212, 206, 206);
-    color: rgb(139, 133, 133);
+.inputs p{
+    color: rgb(116, 109, 109);
+    font-size: 1.1rem;
 }
+
+.error{
+    background-color: rgb(255, 73, 60);
+    color: rgb(255, 255, 255);
+    font-size: 1.5rem;
+    height: 3rem;
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    width: 100%;
+    
+}
+
 
