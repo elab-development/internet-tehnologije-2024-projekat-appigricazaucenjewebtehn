@@ -5,15 +5,13 @@ import AuthContext from "../context/AuthProvider";
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios.js';
 
-
-import user_icon from '../components/assets/person.png'
 import email_icon from '../components/assets/email.png'
 import password_icon from '../components/assets/password.png'
 
 
-const LOGIN_URL = "/login";
+
 export default function Login(){
-    const { setAuth } = useContext(AuthContext);
+    const { auth, setAuth } = useContext(AuthContext);
 
     const userRef = useRef(null);
     const errRef = useRef(null);
@@ -24,33 +22,52 @@ export default function Login(){
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
+    const [action, setAction] = useState("Login");
+    const navigate = useNavigate();
+
+    const isLoggedIn = auth?.token || window.sessionStorage.getItem('auth_token');
+
     useEffect(() => {
-        if(userRef.current){
-            userRef.current.focus();
+        if (isLoggedIn) {
+            setSuccess(true);
+        } else {
+            userRef.current?.focus();
         }
-        
-    }, [])
+    }, [isLoggedIn]);
 
     useEffect(() => {
         setErrMsg('');
-    }, [user, pwd])
+    }, [email, pwd])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setErrMsg('');
         try{
-            const response = await axios.post('api/login', JSON.stringify({email, pwd}), {
-                headers: {'Content-Type': 'application/json'},
-                withCredentials: true
-            });
-            console.log(JSON.stringify(response?.data));
-            const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
-            setAuth({email, pwd, roles, accessToken});
-            setUser('');
-            setPwd('');
-            setEmail('');
-            setSuccess(true);
+            console.log('Login attempt:', { email, pwd });
+            const response = await axios.post(
+                '/api/login',
+                { email, password: pwd },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+            console.log('Login successful:', response.data);
+            const { token, user, role, data } = response.data;
+
+            if (!token) {
+                throw new Error('No token received');
+            }
+
+            const userData = user || data || { email, role };
+
+            window.sessionStorage.setItem('auth_token', token);
+            window.sessionStorage.setItem('user_data', JSON.stringify(userData));
+
+            if (setAuth) {
+                setAuth({ user: userData, token });
+            }
         }catch(err){
             if(!err?.response){
                 setErrMsg('No server response');
@@ -62,26 +79,55 @@ export default function Login(){
                 setErrMsg('Login failed');
             }
             errRef.current.focus();
-        }
-
-        
+        }        
     }
 
-    const [action, setAction] = useState("Login");
-    const navigate = useNavigate();
-
-    const handleActionChange = (newAction) => {
-        setAction(newAction);
-        navigate(`/${newAction.toLowerCase()}`);
+     const handleLogout = () => {
+        window.sessionStorage.removeItem('auth_token');
+        window.sessionStorage.removeItem('user_data');
+        
+        if (setAuth) {
+            setAuth({});
+        }
+        
+        setSuccess(false);
+        setEmail('');
+        setPwd('');
+        setErrMsg('');
+        
+        console.log('User logged out successfully');
+        
+        navigate('/login');
     };
 
     return(
         <>
-        {success ? (
+        {success || isLoggedIn ? (
             <div className="logged-header">
                 <h1>Ulogovani ste!</h1>
                 <br />
-                <p>Vrati se na pocetnu stranu</p>
+                <p>
+                    <a href="/" onClick={(e) => {
+                        e.preventDefault();
+                        navigate('/');
+                    }}>Vrati se na početnu stranu</a>
+                </p>
+                <br />
+                <button 
+                    onClick={handleLogout}
+                    className="logout-btn"
+                    style={{
+                        padding: '10px 20px',
+                        backgroundColor: '#ff4444',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '5px',
+                        cursor: 'pointer',
+                        fontSize: '16px'
+                    }}
+                >
+                    Logout
+                </button>
             </div>
         ) : (
             <div className="container" onSubmit={handleSubmit}>
@@ -92,15 +138,15 @@ export default function Login(){
                 <form className="inputs">
                     <div>
                         <img src={email_icon} alt="" />
-                        <input type="email" placeholder="Email" ref={userRef} onChange={(e)=>setEmail(e.target.value)} value={email} required/>
+                        <input type="email" placeholder="Email" ref={userRef} autoComplete="off" onChange={(e)=>setEmail(e.target.value)} value={email} required/>
                     </div>
                     <div>
                         <img src={password_icon} alt="" />
                         <input type="password" placeholder="Password" onChange={(e)=>setPwd(e.target.value)} value={pwd} required/>
                     </div>
                 
-                    <button>Login</button>
-                    <p>Don't have an account? <a href="#">Register here!</a></p>
+                    <button type="submit">Login</button>
+                    <p>Don't have an account? <a href="/register">Register here!</a></p>
 
                 </form>
                 <div className="error">
