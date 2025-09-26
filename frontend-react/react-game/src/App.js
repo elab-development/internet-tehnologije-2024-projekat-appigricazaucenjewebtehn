@@ -1,6 +1,7 @@
 import './App.css';
 import Navbar from "./components/Navbar.js"
-import About from "./pages/About.js"
+import Footer from "./components/Footer";
+import TopTenPlayers from "./pages/TopTenPlayers.js"
 import Home from "./pages/Home.js"
 import Login from "./pages/Login.js"
 import Register from "./pages/Register.js"
@@ -17,9 +18,10 @@ function App() {
           <Route path="/kviz" element={<Kviz />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/top-ten-players" element={<TopTenPlayers />} />
         </Routes>
       </div>
+      <Footer />
    </>
   );
 }

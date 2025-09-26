@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthProvider";
 import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios.js';
+import { loginUser, logoutUser } from '../hooks/useSessionStorage';
 
 import email_icon from '../components/assets/email.png'
 import password_icon from '../components/assets/password.png'
@@ -62,8 +63,7 @@ export default function Login(){
 
             const userData = user || data || { email, role };
 
-            window.sessionStorage.setItem('auth_token', token);
-            window.sessionStorage.setItem('user_data', JSON.stringify(userData));
+            loginUser(token, userData);
 
             if (setAuth) {
                 setAuth({ user: userData, token });
@@ -83,8 +83,7 @@ export default function Login(){
     }
 
      const handleLogout = () => {
-        window.sessionStorage.removeItem('auth_token');
-        window.sessionStorage.removeItem('user_data');
+        logoutUser();
         
         if (setAuth) {
             setAuth({});
@@ -116,15 +115,6 @@ export default function Login(){
                 <button 
                     onClick={handleLogout}
                     className="logout-btn"
-                    style={{
-                        padding: '10px 20px',
-                        backgroundColor: '#ff4444',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
-                        cursor: 'pointer',
-                        fontSize: '16px'
-                    }}
                 >
                     Logout
                 </button>

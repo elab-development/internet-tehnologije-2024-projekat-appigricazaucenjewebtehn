@@ -10,6 +10,7 @@ use App\Http\Resources\V1\GameResource;
 use App\Http\Resources\V1\GameCollection;
 use App\Filters\V1\GamesFilter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GameController extends Controller
 {
@@ -93,11 +94,23 @@ class GameController extends Controller
     }
 
     public function topScores(){
-        $topPlayers = Game::orderBy('score', 'DESC')
+        $topPlayers = Game::with('player')
+        ->orderBy('score', 'DESC')
         ->take(10)
-        ->get();
+        ->get()
+        ->map(function($game) {
+            return [
+                'id' => $game->id,
+                'score' => $game->score,
+                'completed' => $game->completed,
+                'created_at' => $game->created_at,
+                'player_name' => $game->player->name,
+                'player_email' => $game->player->email
+            ];
+        });
 
-        return GameResource::collection($topPlayers);
+        return response()->json($topPlayers);
+        //return GameResource::collection($topPlayers);
     }
 
     public function markAsComplete($id){

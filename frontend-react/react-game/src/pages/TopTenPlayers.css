@@ -1,0 +1,105 @@
+.top-ten-container{
+    align-self: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1rem;
+    padding: 1.5rem;
+    min-height: 44rem;
+}
+
+.top-ten-header{
+    text-align: center;
+    margin-bottom: 2rem;
+    border-radius: 2rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.top-ten-header h1{
+    font-size: 2.5rem;
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+    color: rgb(206, 81, 108);
+}
+
+.top-ten-header p {
+    font-size: 1.2rem;
+    color: rgb(116, 109, 109);
+}
+
+.table-container{
+    padding-bottom: 2rem;
+}
+
+.players-table{
+    color: rgb(107, 98, 98);
+}
+
+.players-table td{
+    width: 11rem;
+    height: 2.8rem;
+    font-size: 1.2rem;
+}
+
+.players-table th {
+  width: 20%;
+  text-align: center;
+  color: rgb(116, 109, 109);
+  padding-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.loading-spinner{
+    color: rgb(116, 109, 109);
+    padding: 2rem;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+}
+
+.status-cell {
+  text-align: center;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.25rem;
+  min-width: 8rem;
+}
+
+.table-footer{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.table-footer button{
+    background: rgb(206, 81, 108);
+    color: white;
+    border: none;
+    width: 10rem;
+    height: 3rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    border-radius: 3rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.error-message{
+    margin-top: 10rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.error-message button{
+    margin-top: 4rem;
+    margin-bottom: 8rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    width: 15rem;
+    height: 3rem;
+}

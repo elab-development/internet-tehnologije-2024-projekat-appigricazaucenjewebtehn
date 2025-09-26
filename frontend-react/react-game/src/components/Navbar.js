@@ -6,7 +6,7 @@ export default function Navbar(){
         <ul>
             <CustomLink to="/kviz">Kviz</CustomLink>
             <CustomLink to="/login">Login</CustomLink>
-            <CustomLink to="/about">O nama</CustomLink>         
+            <CustomLink to="/top-ten-players">Najbolji igraci</CustomLink>         
         </ul>
     </nav>
 }
