@@ -6,15 +6,19 @@ export function useSessionStorage(key) {
             const item = window.sessionStorage.getItem(key);
             if (!item) return null;
             
-            if (item.startsWith('"') && item.endsWith('"')) {
-                const parsed = JSON.parse(item);
-                return typeof parsed === 'string' ? JSON.parse(parsed) : parsed;
+            try {
+                return JSON.parse(item);
+            } catch (firstError) {
+                try {
+                    const cleaned = item.replace(/^"+|"+$/g, '');
+                    return JSON.parse(cleaned);
+                } catch (secondError) {
+                    return item;
+                }
             }
-            
-            return JSON.parse(item);
         } catch (error) {
             console.error('Error reading sessionStorage:', error);
-            return window.sessionStorage.getItem(key);
+            return null;
         }
     });
 
@@ -27,20 +31,23 @@ export function useSessionStorage(key) {
                     return;
                 }
 
-                if (item.startsWith('"') && item.endsWith('"')) {
-                    const parsed = JSON.parse(item);
-                    setValue(typeof parsed === 'string' ? JSON.parse(parsed) : parsed);
-                } else {
+                try {
                     setValue(JSON.parse(item));
+                } catch (parseError) {
+                    try {
+                        const cleaned = item.replace(/^"+|"+$/g, '');
+                        setValue(JSON.parse(cleaned));
+                    } catch (secondError) {
+                        setValue(item);
+                    }
                 }
             } catch (error) {
                 console.error('Error parsing sessionStorage:', error);
-                setValue(window.sessionStorage.getItem(key));
+                setValue(null);
             }
         };
 
         window.addEventListener('storage', handleStorageChange);
-        
         window.addEventListener('sessionStorageChanged', handleStorageChange);
 
         return () => {
@@ -57,15 +64,23 @@ export function triggerSessionStorageChange() {
 }
 
 export function loginUser(token, userData) {
-    window.sessionStorage.setItem('auth_token', token);
-    window.sessionStorage.setItem('user_data', JSON.stringify(userData));
-    triggerSessionStorageChange();
+    try {
+        const userDataToStore = typeof userData === 'string' ? userData : JSON.stringify(userData);
+        window.sessionStorage.setItem('auth_token', token);
+        window.sessionStorage.setItem('user_data', userDataToStore);
+        triggerSessionStorageChange();
+    } catch (error) {
+        console.error('Error saving to sessionStorage:', error);
+    }
 }
 
 export function logoutUser() {
-    window.sessionStorage.removeItem('auth_token');
-    window.sessionStorage.removeItem('user_data');
-    triggerSessionStorageChange();
+    try {
+        window.sessionStorage.removeItem('auth_token');
+        window.sessionStorage.removeItem('user_data');
+        triggerSessionStorageChange();
+    } catch (error) {
+        console.error('Error during logout:', error);
+    }
 }
-
 

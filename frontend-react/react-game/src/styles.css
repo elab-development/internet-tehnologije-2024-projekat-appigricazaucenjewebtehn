@@ -13,8 +13,9 @@ body{
     margin: 2rem;
     margin-left: 24rem;
     margin-right: 24rem;
+    border-radius: 3rem;
     text-align: center;
-    min-height: 46rem;
+    min-height: 40rem;
 }
 
 .site-title{

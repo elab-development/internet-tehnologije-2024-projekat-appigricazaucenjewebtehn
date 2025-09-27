@@ -4,12 +4,12 @@ export default function Footer() {
     const userData = useSessionStorage('user_data');
     const token = useSessionStorage('auth_token');
 
+    const isLoggedIn = !!token && !!userData;
+
     const getUserName = () => {
         if (!userData) return 'Korisnik';
             return userData.email;
     };
-
-    const isLoggedIn = !!token;
 
     return (
         <footer className="footer">

@@ -65,7 +65,7 @@ const TopTenPlayers = ()=>{
 
     if (error) {
         return (
-            <div className="top-ten-container">
+            <div className="container">
                 <div className="error-message">
                     <p>{error}</p>
                     <button onClick={fetchTopPlayers} className="retry-btn">Pokusaj ponovo</button>
@@ -75,7 +75,7 @@ const TopTenPlayers = ()=>{
     }
 
     return (
-        <div className="top-ten-container">
+        <div className="container">
             <div className="top-ten-header">
                 <h1>Najbolji igraci</h1>
                 <p>svih vremena</p>

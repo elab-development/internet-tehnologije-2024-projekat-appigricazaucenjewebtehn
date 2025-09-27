@@ -19,11 +19,9 @@ export default function Login(){
 
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
-    const [user, setUser] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
-    const [action, setAction] = useState("Login");
     const navigate = useNavigate();
 
     const isLoggedIn = auth?.token || window.sessionStorage.getItem('auth_token');
@@ -55,19 +53,26 @@ export default function Login(){
                 }
             );
             console.log('Login successful:', response.data);
-            const { token, user, role, data } = response.data;
+            const { token, user } = response.data;
 
             if (!token) {
                 throw new Error('No token received');
             }
 
-            const userData = user || data || { email, role };
+            const userDataForStorage = {
+                id: user.id,
+                name: user.name,
+                email: user.email
+            };
 
-            loginUser(token, userData);
+            console.log('Final user data for storage:', userDataForStorage);
+
+            loginUser(token, userDataForStorage);
 
             if (setAuth) {
-                setAuth({ user: userData, token });
+                setAuth({ user: userDataForStorage, token });
             }
+
         }catch(err){
             if(!err?.response){
                 setErrMsg('No server response');
@@ -80,9 +85,9 @@ export default function Login(){
             }
             errRef.current.focus();
         }        
-    }
+    } 
 
-     const handleLogout = () => {
+    const handleLogout = () => {
         logoutUser();
         
         if (setAuth) {
@@ -109,7 +114,7 @@ export default function Login(){
                     <a href="/" onClick={(e) => {
                         e.preventDefault();
                         navigate('/');
-                    }}>Vrati se na početnu stranu</a>
+                    }}>Vrati se na pocetnu stranu</a>
                 </p>
                 <br />
                 <button 
@@ -122,7 +127,7 @@ export default function Login(){
         ) : (
             <div className="container" onSubmit={handleSubmit}>
                 <div className="header">
-                    <div className="text">{action}</div>
+                    <div className="text">Login</div>
                     <div className="underline"></div>
                 </div>
                 <form className="inputs">
