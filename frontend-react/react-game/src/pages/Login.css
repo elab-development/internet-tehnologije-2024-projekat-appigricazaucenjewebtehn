@@ -1,0 +1,133 @@
+
+.container{
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 4rem;
+    background: white;
+    padding-bottom: 2rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.text{
+    color: rgb(206, 81, 108);
+    font-size: 3rem;
+    font-weight: 500;
+}
+
+.underline{
+    width: 4rem;
+    height: 0.3rem;
+    background: rgb(206, 81, 108);
+    border-radius: 0.8rem;
+}
+
+.inputs{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.inputs > div {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+    max-width: 30rem;
+    height: 3.5rem;
+    background: rgb(243, 240, 240);
+    border-radius: 0.5rem;
+    padding: 0 1rem;
+}
+
+.logged-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 10rem;
+}
+
+.logged-header h1{
+    font-size: 2.5rem;
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+    color: rgb(206, 81, 108);
+}
+
+.logged-header p{
+    color: rgb(116, 109, 109);
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.logged-header button{
+    color: white;
+    background-color: rgb(206, 81, 108);
+    padding: 1rem 2rem;
+    border: 0;
+    border-radius: 1.5rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 3rem;
+    margin-bottom: 20rem;
+}
+
+.inputs img{
+    margin: 0rem 2rem;  
+}
+
+.inputs input{
+    height: 2rem;
+    width: 14rem;
+    background: rgb(243, 240, 240);
+    border: none;
+    outline: none;
+    color: rgb(116, 109, 109);
+    font-size: 1.2rem;
+}
+
+.inputs button{
+    align-self: center;
+    color: white;
+    background: rgb(206, 81, 108);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    height: 3rem;
+    width: 10rem;
+    border: 0rem;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.inputs p{
+    color: rgb(116, 109, 109);
+    font-size: 1.1rem;
+}
+
+.error{
+    color: rgb(255, 73, 60);
+    font-size: 1.5rem;
+    height: 3rem;
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    width: 100%;
+    
+}
+
+
+
