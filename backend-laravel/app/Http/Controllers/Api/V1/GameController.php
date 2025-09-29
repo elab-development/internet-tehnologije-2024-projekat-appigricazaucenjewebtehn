@@ -93,24 +93,63 @@ class GameController extends Controller
         //
     }
 
-    public function topScores(){
-        $topPlayers = Game::with('player')
-        ->orderBy('score', 'DESC')
-        ->take(10)
-        ->get()
-        ->map(function($game) {
-            return [
-                'id' => $game->id,
-                'score' => $game->score,
-                'completed' => $game->completed,
-                'created_at' => $game->created_at,
-                'player_name' => $game->player->name,
-                'player_email' => $game->player->email
-            ];
-        });
+    public function topScores(Request $request){
+        try {
+            $query = DB::table('games')
+                ->join('players', 'games.player_id', '=', 'players.id')
+                ->select(
+                    'games.id',
+                    'games.score',
+                    'games.completed',
+                    'games.created_at',
+                    'players.name as player_name',
+                    'players.email as player_email'
+                )
+                ->where('games.completed', true)
+                ->orderBy('games.score', 'DESC');
 
-        return response()->json($topPlayers);
-        //return GameResource::collection($topPlayers);
+            if ($request->has('playerName') && !empty($request->playerName)) {
+                $query->where('players.name', 'like', '%' . $request->playerName . '%');
+            }
+
+            if ($request->has('minScore') && !empty($request->minScore)) {
+                $query->where('games.score', '>=', $request->minScore);
+            }
+
+            if ($request->has('maxScore') && !empty($request->maxScore)) {
+                $query->where('games.score', '<=', $request->maxScore);
+            }
+
+            if ($request->has('dateFrom') && !empty($request->dateFrom)) {
+                $query->whereDate('games.created_at', '>=', $request->dateFrom);
+            }
+
+            if ($request->has('dateTo') && !empty($request->dateTo)) {
+                $query->whereDate('games.created_at', '<=', $request->dateTo);
+            }
+
+            $perPage = $request->get('per_page', 10);
+            $page = $request->get('page', 1);
+            
+            $results = $query->paginate($perPage, ['*'], 'page', $page);
+
+            return response()->json([
+                'data' => $results->items(),
+                'current_page' => $results->currentPage(),
+                'last_page' => $results->lastPage(),
+                'per_page' => $results->perPage(),
+                'total' => $results->total(),
+                'from' => $results->firstItem(),
+                'to' => $results->lastItem(),
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('Error fetching top scores: ' . $e->getMessage());
+            return response()->json([
+                'message' => 'Došlo je do greške pri učitavanju podataka',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function markAsComplete($id){
