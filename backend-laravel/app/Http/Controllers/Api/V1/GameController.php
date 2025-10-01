@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Game;
 use App\Http\Requests\V1\StoreGameRequest;
+use App\Models\Player;
 use App\Http\Requests\V1\UpdateGameRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\GameResource;
@@ -11,6 +12,7 @@ use App\Http\Resources\V1\GameCollection;
 use App\Filters\V1\GamesFilter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class GameController extends Controller
 {
@@ -87,6 +89,7 @@ class GameController extends Controller
 
     public function topScores(Request $request){
         try {
+            
             $query = DB::table('games')
                 ->join('players', 'games.player_id', '=', 'players.id')
                 ->select(
@@ -178,6 +181,36 @@ class GameController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Neuspesno brisanje igre',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getStats()
+    {
+        try {
+            return Cache::remember('game_statistics', 3600, function() { // 3600 sekundi je 1 sat i toliko se pamti kes
+                $stats = [
+                    'total_players' => Player::count(),
+                    'total_games' => Game::count(),
+                    'completed_games' => Game::where('completed', true)->count(),
+                    'average_score' => round(Game::where('completed', true)->avg('score') ?? 0, 2),
+                    'top_score' => Game::max('score') ?? 0,
+                    'games_today' => Game::whereDate('created_at', today())->count(),
+                ];
+
+                return response()->json([
+                    'success' => true,
+                    'data' => $stats,
+                    'cached_at' => now()->toDateTimeString(),
+                    'cache_expires_at' => now()->addHours(1)->toDateTimeString()
+                ]);
+            });
+        
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error fetching statistics',
                 'error' => $e->getMessage()
             ], 500);
         }

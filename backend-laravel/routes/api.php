@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'middleware' => 'auth:sanctum'], function(){
 
     Route::get('/games/top-scores', [GameController::class, 'topScores']);
+    Route::get('/games/stats', [GameController::class, 'getStats']);
     Route::post('/games/{id}/complete', [GameController::class, 'markAsComplete']);
     Route::delete('/questions/{id}/force-delete', [QuestionController::class, 'forceDelete']);
 
