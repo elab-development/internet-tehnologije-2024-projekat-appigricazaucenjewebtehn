@@ -39,6 +39,7 @@
     color: rgb(116, 109, 109);
     font-style: italic;
     padding: 1rem;
+    font-size: 1.2rem;
 }
 
 .joke-error {
@@ -47,6 +48,7 @@
     padding: 1rem;
     border-radius: 0.5rem;
     border: 1px solid #f5c6cb;
+    font-size: 1.1rem;
 }
 
 .joke-content {
@@ -63,6 +65,7 @@
     background: white;
     border-radius: 0.5rem;
     border-left: 4px solid rgb(206, 81, 108);
+    word-wrap: break-word;
 }
 
 .new-joke-btn {
@@ -92,6 +95,7 @@
 
 .api-info small {
     color: rgb(116, 109, 109);
+    font-size: 0.9rem;
 }
 
 .api-info a {
@@ -106,17 +110,105 @@
 @media (max-width: 768px) {
     .home-container {
         padding: 1rem;
+        min-height: auto;
     }
     
     .home-container h1 {
         font-size: 2rem;
     }
+
+    .home-container p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
     
     .joke-section {
         padding: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .joke-section h2 {
+        font-size: 1.3rem;
+    }
+
+    .joke-loading {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+
+    .joke-error {
+        font-size: 1rem;
+        padding: 0.8rem;
     }
     
     .joke-text {
         font-size: 1.1rem;
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .new-joke-btn {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
+    }
+
+    .api-info small {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-container {
+        padding: 0.5rem;
+    }
+
+    .home-container h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .home-container p {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .joke-section {
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .joke-section h2 {
+        font-size: 1.1rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .joke-loading {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
+
+    .joke-error {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
+
+    .joke-text {
+        font-size: 1rem;
+        padding: 0.7rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .new-joke-btn {
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .api-info {
+        margin-top: 0.8rem;
+        padding-top: 0.8rem;
+    }
+
+    .api-info small {
+        font-size: 0.75rem;
     }
 }

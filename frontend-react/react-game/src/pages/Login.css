@@ -1,135 +1,373 @@
-
-.container{
-    align-self: center;
-    display: flex;
-    flex-direction: column;
-    margin-top: 4rem;
-    background: white;
-    padding-bottom: 2rem;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+.container {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  margin-top: 4rem;
+  background: white;
+  padding-bottom: 2rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.header{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
-    margin-top: 2rem;
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  margin-top: 2rem;
 }
 
-.text{
-    color: rgb(206, 81, 108);
-    font-size: 3rem;
-    font-weight: 500;
+.text {
+  color: rgb(206, 81, 108);
+  font-size: 3rem;
+  font-weight: 500;
 }
 
-.underline{
-    width: 4rem;
-    height: 0.3rem;
-    background: rgb(206, 81, 108);
-    border-radius: 0.8rem;
+.underline {
+  width: 4rem;
+  height: 0.3rem;
+  background: rgb(206, 81, 108);
+  border-radius: 0.8rem;
 }
 
-.inputs{
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+.inputs {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 0 1rem;
 }
+
 .inputs > div {
-    display: flex;
-    align-items: center;
-    margin: auto;
-    width: 100%;
-    max-width: 30rem;
-    height: 3.5rem;
-    background: rgb(255, 255, 255);
-    border-radius: 0.5rem;
-    padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  margin: auto;
+  width: 100%;
+  max-width: 30rem;
+  height: 3.5rem;
+  background: rgb(255, 255, 255);
+  border-radius: 0.5rem;
+  padding: 0 1rem;
+  border: 1px solid #e9ecef;
 }
 
-.logged-header{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-top: 10rem;
+.logged-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 10rem;
+  padding: 0 1rem;
 }
 
-.logged-header h1{
-    font-size: 2.5rem;
-    margin-bottom: 0.8rem;
-    font-weight: 500;
-    color: rgb(206, 81, 108);
+.logged-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+  color: rgb(206, 81, 108);
+  text-align: center;
 }
 
-.logged-header p{
-    color: rgb(116, 109, 109);
-    font-weight: 500;
-    font-size: 1.1rem;
+.logged-header p {
+  color: rgb(116, 109, 109);
+  font-weight: 500;
+  font-size: 1.1rem;
+  text-align: center;
 }
 
-.logged-header button{
-    color: white;
-    background-color: rgb(206, 81, 108);
-    padding: 1rem 2rem;
-    border: 0;
-    border-radius: 1.5rem;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 1.3rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 3rem;
-    margin-bottom: 20rem;
+.logged-header button {
+  color: white;
+  background-color: rgb(206, 81, 108);
+  padding: 1rem 2rem;
+  border: 0;
+  border-radius: 1.5rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 3rem;
+  margin-bottom: 20rem;
 }
 
-.inputs img{
-    margin: 0rem 2rem;  
+.logged-header button:hover {
+  background-color: rgb(190, 65, 92);
+  transform: translateY(-2px);
 }
 
-.inputs input{
-    height: 2rem;
-    width: 14rem;
-    background: rgb(255, 255, 255);
-    border: none;
-    outline: none;
-    color: rgb(116, 109, 109);
+.inputs img {
+  margin: 0rem 2rem;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.inputs input {
+  height: 2rem;
+  width: 100%;
+  background: rgb(255, 255, 255);
+  border: none;
+  outline: none;
+  color: rgb(116, 109, 109);
+  font-size: 1.2rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.inputs button {
+  align-self: center;
+  color: white;
+  background: rgb(206, 81, 108);
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  height: 3rem;
+  width: 10rem;
+  border: 0rem;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.inputs button:hover {
+  background: rgb(190, 65, 92);
+  transform: translateY(-2px);
+}
+
+.inputs p {
+  color: rgb(116, 109, 109);
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.inputs a {
+  color: rgb(206, 81, 108);
+  text-decoration: none;
+}
+
+.inputs a:hover {
+  text-decoration: underline;
+}
+
+.error {
+  color: rgb(255, 73, 60);
+  background: white;
+  border: 0;
+  font-size: 1.5rem;
+  height: 3rem;
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  width: 100%;
+  text-align: center;
+}
+
+.errmsg {
+  display: block;
+}
+
+.offscreen {
+  display: none;
+}
+
+.premium-required {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  padding: 2rem;
+}
+
+.premium-message {
+  background: white;
+  padding: 3rem;
+  border-radius: 1rem;
+  text-align: center;
+  max-width: 600px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.premium-message h2 {
+  color: rgb(206, 81, 108);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.premium-message p {
+  color: rgb(116, 109, 109);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin-top: 2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .text {
+    font-size: 2rem;
+  }
+
+  .underline {
+    width: 3rem;
+  }
+
+  .inputs {
+    gap: 1.5rem;
+  }
+
+  .inputs > div {
+    height: 3rem;
+    max-width: 100%;
+  }
+
+  .inputs img {
+    margin: 0 1rem;
+    width: 20px;
+    height: 20px;
+  }
+
+  .inputs input {
+    font-size: 1rem;
+  }
+
+  .inputs button {
     font-size: 1.2rem;
-}
+    height: 2.5rem;
+    width: 9rem;
+  }
 
-.inputs button{
-    align-self: center;
-    color: white;
-    background: rgb(206, 81, 108);
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 400;
-    height: 3rem;
-    width: 10rem;
-    border: 0rem;
-    border-radius: 1.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
+  .inputs p {
+    font-size: 1rem;
+  }
 
-.inputs p{
-    color: rgb(116, 109, 109);
+  .error {
+    font-size: 1.2rem;
+  }
+
+  .logged-header {
+    margin-top: 5rem;
+  }
+
+  .logged-header h1 {
+    font-size: 2rem;
+  }
+
+  .logged-header p {
+    font-size: 1rem;
+  }
+
+  .logged-header button {
     font-size: 1.1rem;
-}
+    padding: 0.8rem 1.5rem;
+    margin-bottom: 10rem;
+  }
 
-.error{
-    color: rgb(255, 73, 60);
-    background: white;
-    border: 0;
+  .premium-message {
+    padding: 2rem;
+  }
+
+  .premium-message h2 {
     font-size: 1.5rem;
-    height: 3rem;
-    margin-top: 1rem;
-    padding-top: 0.5rem;
-    width: 100%;
-    
+  }
+
+  .premium-message p {
+    font-size: 1rem;
+  }
 }
 
+@media (max-width: 480px) {
+  .container {
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    padding-bottom: 1rem;
+  }
 
+  .header {
+    margin-top: 1rem;
+  }
 
+  .text {
+    font-size: 1.5rem;
+  }
+
+  .underline {
+    width: 2.5rem;
+    height: 0.25rem;
+  }
+
+  .inputs {
+    margin-top: 1.5rem;
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+
+  .inputs > div {
+    height: 2.8rem;
+    padding: 0 0.5rem;
+  }
+
+  .inputs img {
+    margin: 0 0.5rem;
+    width: 18px;
+    height: 18px;
+  }
+
+  .inputs input {
+    font-size: 0.9rem;
+  }
+
+  .inputs button {
+    font-size: 1rem;
+    height: 2.3rem;
+    width: 8rem;
+    border-radius: 1.2rem;
+  }
+
+  .inputs p {
+    font-size: 0.9rem;
+  }
+
+  .error {
+    font-size: 1rem;
+    height: auto;
+    padding: 0.5rem;
+  }
+
+  .logged-header {
+    margin-top: 3rem;
+  }
+
+  .logged-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .logged-header p {
+    font-size: 0.9rem;
+  }
+
+  .logged-header button {
+    font-size: 1rem;
+    padding: 0.7rem 1.2rem;
+    margin-bottom: 5rem;
+  }
+
+  .premium-message {
+    padding: 1.5rem;
+  }
+
+  .premium-message h2 {
+    font-size: 1.3rem;
+  }
+
+  .premium-message p {
+    font-size: 0.9rem;
+  }
+}
