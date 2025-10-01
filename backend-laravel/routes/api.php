@@ -29,7 +29,10 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'm
     Route::delete('/questions/{id}/force-delete', [QuestionController::class, 'forceDelete']);
 
     //Route::get('/questions/download-csv', [QuestionController::class, 'downloadCSV']);
+    //Route::delete('/players/{player}', [PlayerController::class, 'destroy']);
+
     Route::apiResource('players', PlayerController::class);
+
     Route::apiResource('games', GameController::class);
     Route::apiResource('questions', QuestionController::class);
 });

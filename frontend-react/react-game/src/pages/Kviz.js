@@ -38,7 +38,6 @@ export default function Kviz(){
         try {
             if (!isUserLoggedIn) return;
 
-            console.log('Saljem score na backend:', score);
             console.log('User data:', userData);
             console.log('Token:', token);
 

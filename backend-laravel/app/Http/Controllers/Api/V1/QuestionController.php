@@ -10,6 +10,7 @@ use App\Http\Resources\V1\QuestionResource;
 use App\Http\Resources\V1\QuestionCollection;
 use App\Filters\V1\QuestionsFilter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -118,11 +119,34 @@ class QuestionController extends Controller
         return Response::stream($callback, 200, $headers);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
+    //DELETE QUESTIONS/{id}
+    public function destroy(Question $question)
+    {
+        try {
+            // posto je pitanje vuce game id, necemo brisati igricu jer to nema smisla
+            $question->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'uspesno obrisano',
+                'deleted_question_id' => $question->id
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'nije obrisano',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function forceDelete($id){
         $question = Question::findOrFail($id);
         $question->delete();
     }
-
-
 
 }

@@ -14,7 +14,7 @@ const UnityGame = () => {
       {!isLoaded && (
         <div className="loading-overlay">
           <div className="loading-text">
-            Učitavanje: {Math.round(loadingProgression * 100)}%
+            Ucitavanje: {Math.round(loadingProgression * 100)}%
           </div>
           <div className="loading-bar">
             <div 

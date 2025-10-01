@@ -26,7 +26,6 @@ export default function TopTenPlayers() {
         try {
             setLoading(true);
             
-            // Kreiraj query string za filtere i paginaciju
             const queryParams = new URLSearchParams({
                 page: page,
                 per_page: itemsPerPage,
@@ -47,7 +46,6 @@ export default function TopTenPlayers() {
 
             const data = await response.json();
             
-            // Ako backend vraća paginacione podatke
             if (data.data) {
                 setPlayers(data.data);
                 setTotalItems(data.total || data.data.length);
@@ -59,7 +57,7 @@ export default function TopTenPlayers() {
             setError(null);
         } catch (error) {
             console.error('Error fetching players:', error);
-            setError('Došlo je do greške pri učitavanju podataka.');
+            setError('Niste ulogovani. Posetite Login stranu.');
         } finally {
             setLoading(false);
         }
@@ -77,7 +75,7 @@ export default function TopTenPlayers() {
     };
 
     const applyFilters = () => {
-        setCurrentPage(1); // Vrati na prvu stranu
+        setCurrentPage(1);
         const cleanFilters = Object.fromEntries(
             Object.entries(filters).filter(([_, value]) => value !== '')
         );

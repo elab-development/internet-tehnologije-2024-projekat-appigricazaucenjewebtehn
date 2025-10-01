@@ -85,14 +85,6 @@ class GameController extends Controller
         $game->update($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Game $game)
-    {
-        //
-    }
-
     public function topScores(Request $request){
         try {
             $query = DB::table('games')
@@ -157,6 +149,38 @@ class GameController extends Controller
         $game->update([
             'completed' => true
         ]);
+    }
+
+    public function destroy(Game $game)
+    {
+        try {
+            // Proverite da li igra ima pitanja
+            if (method_exists($game, 'questions') && $game->questions()->exists()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Ne moze izbrisati jer igra poseduje pitanja',
+                    'error' => 'Igra poseduje asocirana pitanja. Izbrisite pitanj prvo.',
+                    'game_id' => $game->id,
+                    'questions_count' => $game->questions()->count()
+                ], 422);
+            }
+
+            // Ako igra nema pitanja, obrišite je
+            $game->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Igra uspesno obrisana',
+                'deleted_game_id' => $game->id
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Neuspesno brisanje igre',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
 }
