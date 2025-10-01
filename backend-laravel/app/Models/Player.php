@@ -15,8 +15,35 @@ class Player extends Model
     protected $fillable = [
         'name',
         'password',
-        'email'
+        'email',
+        'role'
     ];
+
+    protected $attributes = [
+        'role' => 'user' //podrazumevana uloga
+    ];
+
+    const ROLES = [
+        'admin' => 'Administrator',
+        'premium' => 'Premium Korisnik', 
+        'user' => 'Običan Korisnik'
+    ];
+
+    //za proveru uloga
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isPremium() 
+    {
+        return $this->role === 'premium' || $this->isAdmin();
+    }
+
+    public function isUser()
+    {
+        return $this->role === 'user';
+    }
 
     public function games(){
         return $this->hasMany(Game::class);

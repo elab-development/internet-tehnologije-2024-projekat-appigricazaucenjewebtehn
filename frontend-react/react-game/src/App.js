@@ -1,6 +1,7 @@
 import './App.css';
 import Navbar from "./components/Navbar.js"
 import Footer from "./components/Footer";
+import Breadcrumbs from "./components/Breadcrumbs";
 import TopTenPlayers from "./pages/TopTenPlayers.js"
 import Home from "./pages/Home.js"
 import Login from "./pages/Login.js"
@@ -12,6 +13,7 @@ function App() {
   return (
     <>
       <Navbar />
+      <Breadcrumbs />
       <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />

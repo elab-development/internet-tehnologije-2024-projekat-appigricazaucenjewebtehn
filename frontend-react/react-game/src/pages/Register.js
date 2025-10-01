@@ -55,9 +55,9 @@ export default function Register(){
             if(!err?.response){
                 setErrMsg('No server response');
             } else if(err.response?.status){
-                setErrMsg('Username taken');
+                setErrMsg('Vec postoji nalog sa tim emailom');
             } else{
-                setErrMsg('Registration failed');
+                setErrMsg('Greska pri registraciji');
             }
             errRef.current.focus();
         }

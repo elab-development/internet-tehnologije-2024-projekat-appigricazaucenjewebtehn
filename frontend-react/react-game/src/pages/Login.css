@@ -44,7 +44,7 @@
     width: 100%;
     max-width: 30rem;
     height: 3.5rem;
-    background: rgb(243, 240, 240);
+    background: rgb(255, 255, 255);
     border-radius: 0.5rem;
     padding: 0 1rem;
 }
@@ -92,7 +92,7 @@
 .inputs input{
     height: 2rem;
     width: 14rem;
-    background: rgb(243, 240, 240);
+    background: rgb(255, 255, 255);
     border: none;
     outline: none;
     color: rgb(116, 109, 109);
@@ -121,6 +121,8 @@
 
 .error{
     color: rgb(255, 73, 60);
+    background: white;
+    border: 0;
     font-size: 1.5rem;
     height: 3rem;
     margin-top: 1rem;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Game;
 use App\Http\Requests\V1\StoreGameRequest;
+use App\Models\Player;
 use App\Http\Requests\V1\UpdateGameRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\GameResource;
@@ -11,6 +12,7 @@ use App\Http\Resources\V1\GameCollection;
 use App\Filters\V1\GamesFilter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class GameController extends Controller
 {
@@ -85,32 +87,64 @@ class GameController extends Controller
         $game->update($request->all());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Game $game)
-    {
-        //
-    }
+    public function topScores(Request $request){
+        try {
+            
+            $query = DB::table('games')
+                ->join('players', 'games.player_id', '=', 'players.id')
+                ->select(
+                    'games.id',
+                    'games.score',
+                    'games.completed',
+                    'games.created_at',
+                    'players.name as player_name',
+                    'players.email as player_email'
+                )
+                ->where('games.completed', true)
+                ->orderBy('games.score', 'DESC');
 
-    public function topScores(){
-        $topPlayers = Game::with('player')
-        ->orderBy('score', 'DESC')
-        ->take(10)
-        ->get()
-        ->map(function($game) {
-            return [
-                'id' => $game->id,
-                'score' => $game->score,
-                'completed' => $game->completed,
-                'created_at' => $game->created_at,
-                'player_name' => $game->player->name,
-                'player_email' => $game->player->email
-            ];
-        });
+            if ($request->has('playerName') && !empty($request->playerName)) {
+                $query->where('players.name', 'like', '%' . $request->playerName . '%');
+            }
 
-        return response()->json($topPlayers);
-        //return GameResource::collection($topPlayers);
+            if ($request->has('minScore') && !empty($request->minScore)) {
+                $query->where('games.score', '>=', $request->minScore);
+            }
+
+            if ($request->has('maxScore') && !empty($request->maxScore)) {
+                $query->where('games.score', '<=', $request->maxScore);
+            }
+
+            if ($request->has('dateFrom') && !empty($request->dateFrom)) {
+                $query->whereDate('games.created_at', '>=', $request->dateFrom);
+            }
+
+            if ($request->has('dateTo') && !empty($request->dateTo)) {
+                $query->whereDate('games.created_at', '<=', $request->dateTo);
+            }
+
+            $perPage = $request->get('per_page', 10);
+            $page = $request->get('page', 1);
+            
+            $results = $query->paginate($perPage, ['*'], 'page', $page);
+
+            return response()->json([
+                'data' => $results->items(),
+                'current_page' => $results->currentPage(),
+                'last_page' => $results->lastPage(),
+                'per_page' => $results->perPage(),
+                'total' => $results->total(),
+                'from' => $results->firstItem(),
+                'to' => $results->lastItem(),
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('Error fetching top scores: ' . $e->getMessage());
+            return response()->json([
+                'message' => 'Došlo je do greške pri učitavanju podataka',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function markAsComplete($id){
@@ -118,6 +152,68 @@ class GameController extends Controller
         $game->update([
             'completed' => true
         ]);
+    }
+
+    public function destroy(Game $game)
+    {
+        try {
+            // Proverite da li igra ima pitanja
+            if (method_exists($game, 'questions') && $game->questions()->exists()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Ne moze izbrisati jer igra poseduje pitanja',
+                    'error' => 'Igra poseduje asocirana pitanja. Izbrisite pitanj prvo.',
+                    'game_id' => $game->id,
+                    'questions_count' => $game->questions()->count()
+                ], 422);
+            }
+
+            // Ako igra nema pitanja, obrišite je
+            $game->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Igra uspesno obrisana',
+                'deleted_game_id' => $game->id
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Neuspesno brisanje igre',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getStats()
+    {
+        try {
+            return Cache::remember('game_statistics', 3600, function() { // 3600 sekundi je 1 sat i toliko se pamti kes
+                $stats = [
+                    'total_players' => Player::count(),
+                    'total_games' => Game::count(),
+                    'completed_games' => Game::where('completed', true)->count(),
+                    'average_score' => round(Game::where('completed', true)->avg('score') ?? 0, 2),
+                    'top_score' => Game::max('score') ?? 0,
+                    'games_today' => Game::whereDate('created_at', today())->count(),
+                ];
+
+                return response()->json([
+                    'success' => true,
+                    'data' => $stats,
+                    'cached_at' => now()->toDateTimeString(),
+                    'cache_expires_at' => now()->addHours(1)->toDateTimeString()
+                ]);
+            });
+        
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error fetching statistics',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
 }

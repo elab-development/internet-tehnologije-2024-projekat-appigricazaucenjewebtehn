@@ -10,6 +10,7 @@ use App\Http\Resources\V1\PlayerResource;
 use App\Http\Resources\V1\PlayerCollection;
 use App\Filters\V1\PlayersFilter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PlayerController extends Controller
 {
@@ -85,6 +86,33 @@ class PlayerController extends Controller
     //DELETE PLAYERS/{id}
     public function destroy(Player $player)
     {
-        //
+        try {
+            //proveravamo da li ima igre - inace on delete restrict
+                if (method_exists($player, 'games') && $player->games()->exists()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Ne moze moda brisemo igraca koji ima asocirane igre',
+                        'error' => 'Igrac ima asocirane igre',
+                        'player_id' => $player->id,
+                        'games_count' => $player->games()->count()
+                    ], 422); // 422 Unprocessable Entity
+                }
+
+                //brisemo ako nema igre
+                $player->delete();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Igrac uspesno obrisan',
+                    'deleted_player_id' => $player->id
+                ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nemoguce brosanje igraca',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

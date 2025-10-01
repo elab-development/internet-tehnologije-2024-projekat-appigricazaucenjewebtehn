@@ -65,7 +65,8 @@ export function triggerSessionStorageChange() {
 
 export function loginUser(token, userData) {
     try {
-        const userDataToStore = typeof userData === 'string' ? userData : JSON.stringify(userData);
+        const userDataToStore = typeof userData === 'string' ?
+         userData : JSON.stringify(userData);
         window.sessionStorage.setItem('auth_token', token);
         window.sessionStorage.setItem('user_data', userDataToStore);
         triggerSessionStorageChange();

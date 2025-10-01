@@ -14,9 +14,9 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/profile', [AuthController::class, 'profile']);
 });
 
-Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function(){
-    Route::get('/questions/download-csv', [QuestionController::class, 'downloadCSV']);
-});
+// Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function(){
+//     Route::get('/questions/download-csv', [QuestionController::class, 'downloadCSV']);
+// });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -25,13 +25,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'middleware' => 'auth:sanctum'], function(){
 
     Route::get('/games/top-scores', [GameController::class, 'topScores']);
-    Route::post('/games/{id}/complete', [GameController::class, 'markAsComplete']);
-    Route::delete('/questions/{id}/force-delete', [QuestionController::class, 'forceDelete']);
 
-    //Route::get('/questions/download-csv', [QuestionController::class, 'downloadCSV']);
-    Route::apiResource('players', PlayerController::class);
-    Route::apiResource('games', GameController::class);
-    Route::apiResource('questions', QuestionController::class);
+    Route::middleware('premium')->group(function() {
+        Route::get('/questions/download-csv', [QuestionController::class, 'downloadCSV']);
+        Route::get('/games/stats', [GameController::class, 'getStats']);
+    });
+
+    Route::middleware('admin')->group(function() {
+        Route::post('/games/{id}/complete', [GameController::class, 'markAsComplete']);
+        Route::delete('/questions/{id}/force-delete', [QuestionController::class, 'forceDelete']);
+        Route::apiResource('players', PlayerController::class);
+        Route::apiResource('games', GameController::class);
+        Route::apiResource('questions', QuestionController::class);
+    });
+    
+    
 });
 
 

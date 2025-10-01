@@ -1,19 +1,122 @@
-.home-container{
+.home-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    margin-top: 14rem;
-    margin-bottom: 18rem;
+    min-height: 43rem;
 }
 
-.home-container h1{
+.home-container h1 {
     color: rgb(206, 81, 108);
-    padding-bottom: 1rem;
-    font-size: 6rem;
-    font-weight: 500;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
 }
 
-.home-container p{
-    color: rgb(116, 109, 109);
+.home-container p {
     font-size: 1.2rem;
-    padding-left: 8rem;
-    padding-right: 8rem;
+    color: rgb(116, 109, 109);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.joke-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid #dee2e6;
+    margin-top: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.joke-section h2 {
+    color: rgb(206, 81, 108);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.joke-loading {
+    color: rgb(116, 109, 109);
+    font-style: italic;
+    padding: 1rem;
+}
+
+.joke-error {
+    color: #dc3545;
+    background: #f8d7da;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #f5c6cb;
+}
+
+.joke-content {
+    padding: 1rem 0;
+}
+
+.joke-text {
+    font-size: 1.3rem;
+    color: rgb(107, 98, 98);
+    font-style: italic;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.5rem;
+    border-left: 4px solid rgb(206, 81, 108);
+}
+
+.new-joke-btn {
+    background: rgb(206, 81, 108);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 3rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.new-joke-btn:hover {
+    background: rgb(190, 65, 92);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(206, 81, 108, 0.3);
+}
+
+.api-info {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.api-info small {
+    color: rgb(116, 109, 109);
+}
+
+.api-info a {
+    color: rgb(206, 81, 108);
+    text-decoration: none;
+}
+
+.api-info a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .home-container {
+        padding: 1rem;
+    }
+    
+    .home-container h1 {
+        font-size: 2rem;
+    }
+    
+    .joke-section {
+        padding: 1.5rem;
+    }
+    
+    .joke-text {
+        font-size: 1.1rem;
+    }
 }

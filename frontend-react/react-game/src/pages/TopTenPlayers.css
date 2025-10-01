@@ -5,103 +5,285 @@
     padding: 1.5rem;
 }
 
-.top-ten-header{
+.top-players-container {
+    align-self: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1rem;
+    padding: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.top-players-container h1 {
     text-align: center;
     margin-bottom: 2rem;
     border-radius: 2rem;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-.top-ten-header h1{
     font-size: 2.5rem;
-    margin-bottom: 0.8rem;
     font-weight: 500;
     color: rgb(206, 81, 108);
 }
 
-.top-ten-header p {
-    font-size: 1.2rem;
+/* Filter Section */
+.filters-section {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    border: 1px solid #e9ecef;
+}
+
+.filters-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
     color: rgb(116, 109, 109);
+    text-align: center;
 }
 
-.table-container{
-    padding-bottom: 2rem;
-    width: 180%;
-    align-self: center;
+.filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-.players-table{
-    color: rgb(107, 98, 98);
+.filter-group {
+    display: flex;
+    flex-direction: column;
 }
 
-.players-table td{
-    width: 11rem;
-    height: 2.8rem;
-    font-size: 1.2rem;
+.filter-group label {
+    font-size: 1rem;
+    color: rgb(116, 109, 109);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.filter-group input {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.filter-group input:focus {
+    outline: none;
+    border-color: rgb(206, 81, 108);
+}
+
+.filter-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 3rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.btn-primary {
+    background: rgb(206, 81, 108);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: rgb(190, 65, 92);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: rgb(116, 109, 109);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: rgb(90, 85, 85);
+    transform: translateY(-2px);
+}
+
+/* Players Table */
+.players-table {
+    margin-bottom: 2rem;
+    overflow-x: auto;
+}
+
+.players-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .players-table th {
-  width: 20%;
-  text-align: center;
-  color: rgb(116, 109, 109);
-  padding-bottom: 1.5rem;
-  font-size: 1.5rem;
-}
-
-.loading-spinner{
+    background-color: rgb(248, 249, 250);
     color: rgb(116, 109, 109);
-    padding: 2rem;
-    margin-top: 18rem;
-    margin-bottom: 20rem;
-    font-size: 1.5rem;
+    padding: 1.2rem 0.5rem;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
 }
 
-.status-cell {
-  text-align: center;
+.players-table td {
+    padding: 1rem 0.5rem;
+    text-align: center;
+    font-size: 1.1rem;
+    color: rgb(107, 98, 98);
+    border-bottom: 1px solid #e9ecef;
+    height: 2.8rem;
 }
 
-.status-badge {
-  display: inline-block;
-  padding: 0.4rem 0.8rem;
-  border-radius: 20px;
-  color: white;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.25rem;
-  min-width: 8rem;
+.players-table tr:hover {
+    background-color: #f8f9fa;
 }
 
-.table-footer{
+.players-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.pagination-btn {
+    padding: 0.6rem 1.2rem;
+    border: 1px solid #ddd;
+    background: white;
+    color: rgb(116, 109, 109);
+    border-radius: 0.5rem;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 45px;
 }
 
-.table-footer button{
+.pagination-btn:hover:not(:disabled) {
     background: rgb(206, 81, 108);
     color: white;
-    border: none;
-    width: 10rem;
-    height: 3rem;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    border-radius: 3rem;
-    font-size: 1.2rem;
-    font-weight: 400;
-    cursor: pointer;
+    border-color: rgb(206, 81, 108);
 }
 
-.error-message{
-    margin-top: 10rem;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 2rem;
-    font-weight: 500;
+.pagination-btn.active {
+    background: rgb(206, 81, 108);
+    color: white;
+    border-color: rgb(206, 81, 108);
 }
 
-.error-message button{
-    margin-top: 4rem;
-    margin-bottom: 8rem;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+.pagination-btn:disabled {
+    background: #f8f9fa;
+    color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Pagination Info */
+.pagination-info {
+    text-align: center;
+    font-size: 1.1rem;
+    color: rgb(116, 109, 109);
+    margin-bottom: 1rem;
+}
+
+/* Loading and Error States */
+.loading {
+    text-align: center;
+    color: rgb(116, 109, 109);
+    padding: 4rem;
     font-size: 1.5rem;
-    font-weight: 500;
-    width: 15rem;
-    height: 3rem;
+    margin-top: 10rem;
+}
+
+.error {
+    text-align: center;
+    color: #dc3545;
+    padding: 2rem;
+    font-size: 1.3rem;
+    margin-top: 8rem;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 0.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .top-players-container {
+        padding: 1rem;
+    }
+    
+    .filters-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    .players-table {
+        font-size: 0.9rem;
+    }
+    
+    .players-table th,
+    .players-table td {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.9rem;
+    }
+    
+    .pagination {
+        gap: 0.25rem;
+    }
+    
+    .pagination-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.9rem;
+        min-width: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-players-container h1 {
+        font-size: 2rem;
+    }
+    
+    .filters-section h3 {
+        font-size: 1.3rem;
+    }
+    
+    .players-table th {
+        font-size: 1rem;
+        padding: 0.8rem 0.25rem;
+    }
+    
+    .players-table td {
+        font-size: 0.8rem;
+        padding: 0.8rem 0.25rem;
+    }
 }

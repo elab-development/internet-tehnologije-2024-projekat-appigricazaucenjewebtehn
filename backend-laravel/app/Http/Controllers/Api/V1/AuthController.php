@@ -32,6 +32,7 @@ class AuthController extends Controller
                 'name' => $player->name,
                 'email' => $player->email,
                 'password' => $player->password,
+                'role' => $player->role,
             ]
         ], 200);
     }
@@ -46,6 +47,7 @@ class AuthController extends Controller
             'name'=>$request->name,
             'email'=>$request->email,
             'password'=> Hash::make($request->password),
+            'role' => 'user'
         ]);
         if($player){
             $token = $player->createToken($player->name.'Auth-Token')->plainTextToken;
