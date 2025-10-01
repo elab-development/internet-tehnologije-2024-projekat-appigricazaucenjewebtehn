@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './TopTenPlayers.css';
 import { useSessionStorage } from '../hooks/useSessionStorage';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function TopTenPlayers() {
     const [players, setPlayers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [userRole, setUserRole] = useState(null);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -21,11 +23,27 @@ export default function TopTenPlayers() {
     });
 
     const token = useSessionStorage('auth_token');
+    const userData = useSessionStorage('user_data');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (userData && userData.role) {
+            setUserRole(userData.role);
+            
+            if (!['premium', 'admin'].includes(userData.role)) {
+                setError('Samo premium korisnici mogu pristupiti ovoj stranici.');
+                return;
+            }
+        } else {
+            setError('Niste ulogovani. Posetite Login stranu.');
+        }
+    }, [userData]);
 
     const fetchPlayers = async (page = 1, filterParams = {}) => {
         try {
             setLoading(true);
-            
+            setError(null);
+
             const queryParams = new URLSearchParams({
                 page: page,
                 per_page: itemsPerPage,
@@ -64,8 +82,10 @@ export default function TopTenPlayers() {
     };
 
     useEffect(() => {
-        fetchPlayers(currentPage, filters);
-    }, [currentPage, itemsPerPage]);
+        if (userRole && ['premium', 'admin'].includes(userRole) && token) {
+            fetchPlayers(currentPage, filters);
+        }
+    }, [currentPage, itemsPerPage, userRole, token]);
 
     const handleFilterChange = (key, value) => {
         setFilters(prev => ({
@@ -94,13 +114,25 @@ export default function TopTenPlayers() {
         fetchPlayers(1);
     };
 
-     const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
     
     const goToPage = (page) => {
         if (page >= 1 && page <= totalPages) {
             setCurrentPage(page);
         }
     };
+
+    if (userRole && !['premium', 'admin'].includes(userRole)) {
+        return (
+            <div className="premium-required">
+                <div className="premium-message">
+                    <h2>Premium sadrzaj je zakljucan</h2>
+                    <p>Ova stranica je dostupna samo premium korisnicima.</p>
+                    <p>Nadogradi svoj nalog da bi pristupio/la top listi igrača.</p>
+                </div>
+            </div>
+        );
+    }
 
     if (loading) return <div className="loading">Ucitavanje podataka...</div>;
 
@@ -110,7 +142,6 @@ export default function TopTenPlayers() {
         <div className="top-players-container">
             <h1>Najbolji Igrači</h1>
             
-            {/* Filteri */}
             <div className="filters-section">
                 <h3>Filteri</h3>
                 <div className="filters-grid">

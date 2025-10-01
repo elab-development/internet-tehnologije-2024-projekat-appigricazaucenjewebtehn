@@ -12,6 +12,8 @@ export default function Kviz(){
     const userData = useSessionStorage('user_data');
     const isUserLoggedIn = !!token && !!userData;
 
+    const isPremiumOrAdmin = userData && ['premium', 'admin'].includes(userData.role);
+
     const lastScoreSent = useRef(0);
     const isSending = useRef(false);
 
@@ -69,11 +71,23 @@ export default function Kviz(){
     };
 
     const handleDownload = async () => {
+
+        if (!isPremiumOrAdmin) {
+            alert('Samo premium i admin korisnici mogu preuzeti pitanja.');
+            return;
+        }
         
         try {
-            const response = await fetch('http://localhost:8000/api/v1/questions/download-csv');
+            const response = await fetch('http://localhost:8000/api/v1/questions/download-csv', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             
             if (!response.ok) {
+                if (response.status === 401) {
+                    throw new Error('Niste autorizovani za preuzimanje pitanja.');
+                }
                 throw new Error('Network response was not ok');
             }
             //blob (binary large objekat) predstavlja sirove podatke i sluzi da http response pretvaramo u sirove podatke pa u fajl
