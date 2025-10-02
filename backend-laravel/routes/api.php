@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\GameController;
 use App\Http\Controllers\Api\V1\QuestionController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\AdminController;
+use App\Http\Controllers\Api\V1\PlayerController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -34,9 +36,14 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1', 'm
     Route::middleware('admin')->group(function() {
         Route::post('/games/{id}/complete', [GameController::class, 'markAsComplete']);
         Route::delete('/questions/{id}/force-delete', [QuestionController::class, 'forceDelete']);
-        Route::apiResource('players', PlayerController::class);
+        //Route::apiResource('players', PlayerController::class);
         Route::apiResource('games', GameController::class);
         Route::apiResource('questions', QuestionController::class);
+
+       Route::get('/admin/players', [PlayerController::class, 'index']);
+        Route::post('/admin/players', [PlayerController::class, 'store']);
+        Route::put('/admin/players/{player}', [PlayerController::class, 'update']);
+        Route::delete('/admin/players/{player}', [PlayerController::class, 'destroy']);
     });
     
     

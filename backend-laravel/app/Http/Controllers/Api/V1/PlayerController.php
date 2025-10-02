@@ -110,7 +110,7 @@ class PlayerController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Nemoguce brosanje igraca',
+                'message' => 'Nemoguce brosanje',
                 'error' => $e->getMessage()
             ], 500);
         }

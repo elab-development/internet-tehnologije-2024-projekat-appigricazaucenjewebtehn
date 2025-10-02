@@ -19,6 +19,7 @@ class PlayerResource extends JsonResource
             'name'=>$this->name,
             'password'=>$this->password,
             'email'=>$this->email,
+            'role'=>$this->role,
             'games'=>GameResource::collection($this->whenLoaded('games'))
         ];
     }

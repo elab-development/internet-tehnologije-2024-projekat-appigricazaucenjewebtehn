@@ -1,8 +1,12 @@
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 import { useState } from "react";
+import { useSessionStorage } from '../hooks/useSessionStorage';
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    
+    const userData = useSessionStorage('user_data');
+    const isAdmin = userData && userData.role === 'admin';
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -32,6 +36,12 @@ export default function Navbar() {
                 <CustomLink to="/kviz" onClick={closeMenu}>Kviz</CustomLink>
                 <CustomLink to="/login" onClick={closeMenu}>Login</CustomLink>
                 <CustomLink to="/top-ten-players" onClick={closeMenu}>Najbolji igraci</CustomLink>
+                
+                {isAdmin && (
+                    <CustomLink to="/admin/players" onClick={closeMenu}>
+                        Upravljanje korisnicima
+                    </CustomLink>
+                )}
             </ul>
         </nav>
     );

@@ -8,6 +8,7 @@ import Login from "./pages/Login.js"
 import Register from "./pages/Register.js"
 import Kviz from "./pages/Kviz.js"
 import { Route, Routes } from "react-router-dom";
+import AdminPlayers from './pages/AdminPlayers.js';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/top-ten-players" element={<TopTenPlayers />} />
+          <Route path="/admin/players" element={<AdminPlayers />} />
         </Routes>
       </div>
       <Footer />
